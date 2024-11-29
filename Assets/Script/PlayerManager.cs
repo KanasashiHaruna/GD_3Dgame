@@ -21,6 +21,15 @@ public class PlayerManager : MonoBehaviour
     private List<Transform> enemyTransforms = new List<Transform>();
     private Vector3 playerPosition;
     private Vector3 enemyposition;
+
+    [Header("火が出てくる関連")]
+    [SerializeField] private float timeLastShot = 0.0f;
+    [SerializeField] private float shotTime = 2.0f;
+    [SerializeField] private bool readyFire = false;
+    private LineRenderer currentLine;
+    private Transform currentTransform;
+    [SerializeField] FireScript fire;
+
     //[SerializeField] private Transform shotPosition;
 
 
@@ -57,6 +66,17 @@ public class PlayerManager : MonoBehaviour
 
         playerPosition = transform.position;
         UpdateLineRenderers();
+
+        if(readyFire)
+        {
+            timeLastShot += Time.deltaTime;
+            if(timeLastShot>=shotTime)
+            {
+                FireBulletShot(currentLine);
+                readyFire = false;
+                timeLastShot = 0.0f;
+            }
+        }
     }
 
 
@@ -105,15 +125,18 @@ public class PlayerManager : MonoBehaviour
     #region lineRendererのstartとendの位置を入れる
     public void DrawLine(Vector3 enemypos, Transform enemyTransform)
     {
-        LineRenderer newLineRenderer = Instantiate(lineRenderer, transform.position, Quaternion.identity);
-        newLineRenderer.positionCount = 2;
-        newLineRenderer.SetPosition(0, playerPosition); //プレイヤーの位置
-        newLineRenderer.SetPosition(1, enemypos);       //敵の位置
-        newLineRenderer.startWidth = 0.05f;
-        newLineRenderer.endWidth = 0.05f;
+        currentLine = Instantiate(lineRenderer, transform.position, Quaternion.identity);
+        currentLine.positionCount = 2;
+        currentLine.SetPosition(0, playerPosition); //プレイヤーの位置
+        currentLine.SetPosition(1, enemypos);       //敵の位置
+        currentLine.startWidth = 0.05f;
+        currentLine.endWidth = 0.05f;
 
-        lineRenderers.Add(newLineRenderer);             //リストに追加
+        lineRenderers.Add(currentLine);             //リストに追加
         enemyTransforms.Add(enemyTransform);
+
+        currentTransform=enemyTransform;
+        readyFire = true;
     }
     #endregion
 
@@ -124,8 +147,11 @@ public class PlayerManager : MonoBehaviour
         {
             for (int i = 0; i < lineRenderers.Count; i++)
             {
-                lineRenderers[i].SetPosition(0, transform.position);
-                lineRenderers[i].SetPosition(1, enemyTransforms[i].position);
+                if (lineRenderers[i] != null && enemyTransforms[i] != null)
+                {
+                    lineRenderers[i].SetPosition(0, transform.position);
+                    lineRenderers[i].SetPosition(1, enemyTransforms[i].position);
+                }
             }
         }
         //else
@@ -134,4 +160,10 @@ public class PlayerManager : MonoBehaviour
         //}
     }
     #endregion
+
+    private void FireBulletShot(LineRenderer lineRenderer)
+    {
+        FireScript obj = Instantiate(fire, transform.position, Quaternion.identity);
+        obj.Initialize(lineRenderer);
+    }
 }
