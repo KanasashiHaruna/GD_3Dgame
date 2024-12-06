@@ -41,7 +41,7 @@ public class BulletScript : MonoBehaviour
             EnemyScript enemy=collision.GetComponent<EnemyScript>();
             if (enemy != null && enemy.isHit==false)
             {
-                Debug.Log("’e‚Æ“G‚ª“–‚½‚Á‚½‚æ");
+                //Debug.Log("’e‚Æ“G‚ª“–‚½‚Á‚½‚æ");
                 Vector3 enemyPosition = collision.transform.position;
                 player.DrawLine(enemyPosition,collision.transform);
                 enemy.isHit = true;

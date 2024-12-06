@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public bool isHit = false;  //’e‚É“–‚½‚Á‚½‚©A‡‚Á‚½‚½‚ç‚à‚¤ˆê“x“–‚½‚ç‚È‚¢‚æ‚¤‚É
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,4 @@ public class EnemyScript : MonoBehaviour
     {
 
     }
-
-    
-
 }

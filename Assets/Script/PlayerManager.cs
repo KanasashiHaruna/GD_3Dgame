@@ -67,6 +67,7 @@ public class PlayerManager : MonoBehaviour
         playerPosition = transform.position;
         UpdateLineRenderers();
 
+        //火を出せるかどうか----------
         if(readyFire)
         {
             timeLastShot += Time.deltaTime;
@@ -154,16 +155,14 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
-        //else
-        //{
-        //    Debug.LogError("LineRenderersとEnemyTransformsのリストが同期していません！");
-        //}
     }
     #endregion
 
+    #region 火の生成
     private void FireBulletShot(LineRenderer lineRenderer)
     {
         FireScript obj = Instantiate(fire, transform.position, Quaternion.identity);
         obj.Initialize(lineRenderer);
     }
+    #endregion
 }

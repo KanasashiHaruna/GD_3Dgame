@@ -27,9 +27,17 @@ public class FireScript : MonoBehaviour
             //lineRendererの終点
             Vector3 endPosition = lineRenderer.GetPosition(1);
         
+            //lineRendererの終点に向かって動く
             Vector3 direction=(endPosition-transform.position).normalized;
             transform.position += direction * speed * Time.deltaTime;
             lineRenderer.SetPosition(0,transform.position);
+
+            //endPositionの位置ほぼ同じになったらDestroyします
+            if(Vector3.Distance(transform.position, endPosition) < 0.1f)
+            {
+                Destroy(gameObject);
+                Destroy(lineRenderer.gameObject);
+            }
         }
     }
 
@@ -38,8 +46,7 @@ public class FireScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
-            Destroy(lineRenderer.gameObject);
-            Destroy(gameObject);
+           
         }
     }
 }
