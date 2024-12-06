@@ -26,27 +26,39 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = direction * speed;
+       // rb.velocity=direction*speed;
     }
+
+    //void FixedUpdate() { rb.velocity = direction * speed; }
 
     public void SetDirection(Vector3 dir)
     {
-        direction = dir;
+        rb.velocity = dir*speed;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            EnemyScript enemy=collision.GetComponent<EnemyScript>();
-            if (enemy != null && enemy.isHit==false)
+            EnemyScript enemy = collision.gameObject.GetComponent<EnemyScript>();
+            if (enemy != null && enemy.isHit == false)
             {
                 //Debug.Log("íeÇ∆ìGÇ™ìñÇΩÇ¡ÇΩÇÊ");
                 Vector3 enemyPosition = collision.transform.position;
-                player.DrawLine(enemyPosition,collision.transform);
+                player.DrawLine(enemyPosition, collision.transform);
                 enemy.isHit = true;
             }
             Destroy(gameObject);
         }
+
+        //if (collision.gameObject.CompareTag("Wall"))
+        //{
+        //    //Debug.Log("ï«Ç…è’ìÀÇµÇΩ");
+        //    //rb.velocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal);
+        //    //direction = reflecDIr;
+        //}
     }
+ 
+
+    
 }

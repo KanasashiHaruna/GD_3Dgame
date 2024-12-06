@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rb: {fileID: 7056124436977930585}
+  player: {fileID: 0}
 --- !u!33 &8132256686794486418
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,7 +108,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6154075900047864772}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ad917c48f4a0f7040af639de20ddcba2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -115,7 +116,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
